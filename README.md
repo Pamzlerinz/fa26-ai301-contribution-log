@@ -81,7 +81,13 @@ Using UMPIRE framework (adapted):
 
 **Implement:** [b59aaf3](https://github.com/shanker-codepath/DrumBeatRepo/commit/b59aaf31b18ac289dae77653635de0e3b691eaa1) on the [cymbal-image](https://github.com/shanker-codepath/DrumBeatRepo/tree/cymbal-image) branch.
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Review:** DrumBeatRepo has no `CONTRIBUTING.md` or `.github/PULL_REQUEST_TEMPLATE.md`. The root `README.md` has "Contributing" and "Contribution Workflow" sections instead: fork + branch from `main`, make changes, pass all tests, open a PR. From `frontend/package.json` and recent merged PRs, the de facto conventions are:
+- **Lint:** `npm run lint` (ESLint, `eslint.config.mjs`, max 30 warnings)
+- **Tests:** `npm test` (Karma) or `npm run test-vitest` (Vitest) — the project appears to be mid-migration between the two
+- **Commit style:** informal Conventional Commits, e.g. `fix: improve mobile sequencer scrolling`, `docs: add X as a contributor`
+- **PR description:** a short prose summary of the fix followed by a "Changes Made" bullet list (CodeRabbit auto-adds a release-notes summary on top of that)
+
+My commit ("Added crash cymbal image") doesn't follow the `type: summary` convention — worth renaming to something like `fix: add crash cymbal icon` before opening the PR. I haven't run `lint` or the test suite myself yet since I'm working from the diff rather than a local checkout.
 
 **Evaluate:** Run the updated unit test suite (`drum-image.pipe.spec.ts`) and visually confirm the crash cymbal icon renders correctly in both light and dark mode for notes 49 and 57.
 
@@ -131,9 +137,16 @@ Using UMPIRE framework (adapted):
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when submitted]
+**PR Link:** Not yet opened — no PR exists from the `cymbal-image` branch as of this writing.
 
-**PR Description:** [Draft or final PR description - much of the content above can be adapted]
+**PR Description (draft):**
+
+> Resolved [#511](https://github.com/Babali42/DrumBeatRepo/issues/511): the crash cymbal had no dedicated icon and fell back to the generic default (wavelength) icon.
+>
+> **Changes Made**
+> - Added `49: 'crash'` and `57: 'crash'` mappings to `drumImages` in `drum-image.pipe.ts`
+> - Added `crash-light.svg` and `crash-dark.svg` icon assets under `frontend/src/assets/images/drums/`
+> - Updated `drum-image.pipe.spec.ts` so the crash cymbal test expects `assets/images/drums/crash.svg` instead of `default.svg`
 
 **Maintainer Feedback:**
 - [Date]: [Summary of feedback received]
@@ -161,6 +174,6 @@ Using UMPIRE framework (adapted):
 
 ## Resources Used
 
-- [Link to helpful documentation]
+- [DrumBeatRepo root README — Contributing / Contribution Workflow sections](https://github.com/Babali42/DrumBeatRepo#contributing) (no separate `CONTRIBUTING.md` exists)
+- [Issue #511](https://github.com/Babali42/DrumBeatRepo/issues/511)
 - [Tutorial or Stack Overflow post that helped]
-- [GitHub issues or discussions that helped]
