@@ -99,31 +99,39 @@ My commit ("Added crash cymbal image") doesn't follow the `type: summary` conven
 
 ### Unit Tests
 
-- [x] `drum-image.pipe.spec.ts`: crash cymbal (MIDI note for `CRASH_CYMBAL_1`) resolves to `assets/images/drums/crash.svg` (updated from the old expectation of `default.svg`)
+- [x] `drum-image.pipe.spec.ts`: crash cymbal (MIDI note for `CRASH_CYMBAL_1`) resolves to `assets/images/drums/crash.svg` (updated the existing test, which previously asserted `default.svg`)
+- [ ] Not yet run locally: `npm test` (Karma, `ng test --code-coverage`) or `npm run test-vitest` to confirm the full suite still passes — see [TODO below]
 
 ### Integration Tests
 
-- [ ] Integration scenario 1
-- [ ] Integration scenario 2
+Not applicable — this is a single pipe/asset change with no cross-component interaction to test.
 
 ### Manual Testing
 
-[What you tested manually and results — e.g. loading a pattern with crash notes 49/57 in the running app and confirming the icon renders]
+[TODO: load a drum pattern using crash cymbal notes 49 and 57 in the running app (`npm start` in `frontend/`), confirm the new crash icon renders in both light and dark mode, and note the result here.]
 
 ---
 
 ## Implementation Notes
 
-### Week [X] Progress
+### Progress (as of Sept 8)
 
-[What you built this week, challenges faced, decisions made]
+**What I built:**
+- Added `49: 'crash'` and `57: 'crash'` entries to the `drumImages` map in `drum-image.pipe.ts:11-17`, so both crash cymbal MIDI notes resolve to a `crash` icon name instead of falling through to `default`
+- Added two new SVG assets: `frontend/src/assets/images/drums/crash-light.svg` (black fill, for light mode) and `crash-dark.svg` (white fill, for dark mode) — the light/dark split follows the existing pattern used by `kick`, `snare`, `hihats`, and `default`, since the `IconDarkModePipe` rewrites `crash.svg` to `crash-light.svg`/`crash-dark.svg` at render time based on the active theme
+- Updated the existing test in `drum-image.pipe.spec.ts` that asserted the crash cymbal fell back to `default.svg`, so it now asserts it resolves to `crash.svg`
 
-### Week [Y] Progress
+**Challenges faced:**
+- [TODO: what was actually hard here — e.g. finding where the light/dark suffixing happened (`IconDarkModePipe` in `icon-dark-mode.pipe.ts`), sourcing/licensing an SVG, etc. Fill in your own experience.]
 
-[Continue documenting as you work]
+**Commits so far:**
+- [b59aaf3](https://github.com/shanker-codepath/DrumBeatRepo/commit/b59aaf31b18ac289dae77653635de0e3b691eaa1): "Added crash cymbal image" (Sept 8, 2026)
+
+**Not done yet:** no PR opened, no lint/test run confirmed locally — see Pull Request section below.
 
 ### Code Changes
 
+- **Branch:** [shanker-codepath/DrumBeatRepo:cymbal-image](https://github.com/shanker-codepath/DrumBeatRepo/tree/cymbal-image)
 - **Files modified:**
   - `frontend/src/app/ui/pipes/drum-image.pipe.ts` (added `49: 'crash'`, `57: 'crash'` to the map)
   - `frontend/src/app/ui/pipes/drum-image.pipe.spec.ts` (updated expected icon path)
@@ -137,22 +145,45 @@ My commit ("Added crash cymbal image") doesn't follow the `type: summary` conven
 
 ## Pull Request
 
-**PR Link:** Not yet opened — no PR exists from the `cymbal-image` branch as of this writing.
+**PR Link:** Not yet submitted — this PR still needs to be opened on GitHub (DrumBeatRepo has no PR template, so the description below follows the CodePath default template). See "Before you submit" below.
 
-**PR Description (draft):**
+**PR Description (draft — paste into the GitHub PR form):**
 
-> Resolved [#511](https://github.com/Babali42/DrumBeatRepo/issues/511): the crash cymbal had no dedicated icon and fell back to the generic default (wavelength) icon.
+> ## What does this PR do?
 >
-> **Changes Made**
-> - Added `49: 'crash'` and `57: 'crash'` mappings to `drumImages` in `drum-image.pipe.ts`
-> - Added `crash-light.svg` and `crash-dark.svg` icon assets under `frontend/src/assets/images/drums/`
-> - Updated `drum-image.pipe.spec.ts` so the crash cymbal test expects `assets/images/drums/crash.svg` instead of `default.svg`
+> Adds a dedicated icon for the crash cymbal, which previously had no icon of its own.
+>
+> ## Why was this PR needed?
+>
+> Issue #511 reported that the crash cymbal doesn't have a relevant icon reflecting its purpose. Investigation showed that `drumImages` in `drum-image.pipe.ts` only mapped MIDI notes for kick, snare, and hihats — any unmapped note (including crash cymbal notes 49 and 57) silently fell back to the generic `default` icon (a wavelength graphic unrelated to a cymbal).
+>
+> ## What are the relevant issue numbers?
+>
+> Closes #511
+>
+> ## Screenshots / Recordings
+>
+> [TODO: add a before/after screenshot of the drum icon in the sequencer — this is a UI change, so a screenshot matters more here than console output]
+>
+> ## Does this PR meet the acceptance criteria?
+>
+> - [x] Tests added for new/changed behavior (updated `drum-image.pipe.spec.ts`)
+> - [ ] All tests passing — [TODO: run `npm test` / `npm run test-vitest` locally and confirm]
+> - [ ] Follows project style guide — [TODO: run `npm run lint` and confirm no new warnings]
+> - [x] No breaking changes introduced
+> - [ ] Documentation updated (if applicable) — N/A, no user-facing docs reference drum icons
+
+**Before you submit (Phase IV, Steps 1–3):**
+1. From your fork, rebase on upstream main and force-push: `git fetch origin && git rebase origin/main && git push origin cymbal-image --force-with-lease`
+2. Run `npm test` (or `npm run test-vitest`) and `npm run lint` in `frontend/` and confirm both pass — update the checklist above with real results.
+3. Open the PR from `shanker-codepath:cymbal-image` → `Babali42:main` on GitHub, using the description above.
+4. Request review — `Babali42` is the repo owner and by far the most active committer/reviewer (no CODEOWNERS file exists to point elsewhere), so tag them, e.g.: *"Hi @Babali42 — this is my first contribution to this project. I've added a dedicated icon for the crash cymbal (closes #511). Would appreciate a review when you have time!"*
 
 **Maintainer Feedback:**
 - [Date]: [Summary of feedback received]
 - [Date]: [How you addressed it]
 
-**Status:** [Awaiting review / Iterating / Approved / Merged]
+**Status:** Not yet submitted
 
 ---
 
